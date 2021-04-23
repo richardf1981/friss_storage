@@ -87,6 +87,7 @@ To see UI version please try this link
 [   ] Refactor UI code JS <br>
 [   ] Style UI <br>
 [   ] Listing files available for download <br>
+[   ] Handle JWT properly in JS client
 
 ## Over Delivering
 [ X ] APIs for user management JWT <br>

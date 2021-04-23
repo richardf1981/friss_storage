@@ -8,6 +8,9 @@
     let fileDownload = document.getElementById("file-downloader");
     let fileDownloadInput = document.getElementById("file-input-download");
     let fileList = [];
+    let token = null;
+    let USER_NAME = 'demouser@friss.com';
+    let PASSWORD = '4w7ZFMAYF2nFmgUs'
 
     fileDownload.addEventListener('submit', function (evnt) {
         evnt.preventDefault();
@@ -69,18 +72,37 @@
         });
     };
 
-    setToken = function (request){
-        let token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiM2IyMGE0ZjktNzAwNy00YzM4LTk0ZTMtNzE2ZTVkNGZjNjY5IiwiYXVkIjoiZmFzdGFwaS11c2VyczphdXRoIiwiZXhwIjoxNjE5MjM4MzQ2fQ.EKp-WMmcX21vIciIqnt5WMk-fSO5d9eoa86U2Mp28K0"
-        request.setRequestHeader("Authorization", "Bearer " + token);
+    getToken = function (request){
+        return new Promise(resolve => {
+            setTimeout(() => {
+                let request_token = new XMLHttpRequest();
+                let params = {};
 
-
+                request_token.open("POST", '/login');
+                request_token.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                request_token.send('&username=' + USER_NAME + '&password=' + PASSWORD);
+                request_token.onreadystatechange=function() {
+                    if (request_token.readyState === XMLHttpRequest.DONE) {
+                        if (request_token.status === 0 || (request_token.status >= 200 && request_token.status < 400)) {
+                            let json_resp = JSON.parse(request_token.responseText);
+                            resolve(json_resp.access_token);
+                        } else {
+                            // Oh no! There has been an error with the request!
+                            let json_resp = JSON.parse(request_token.responseText);
+                            alert("Sorry, we're unable to process your request! Reason: " + json_resp.detail);
+                        }
+                    }
+                }
+            }, 2000);
+        });
     };
 
-    receiveFile = function (name_file, bt, originalText){
+    receiveFile = async function (name_file, bt, originalText){
         let request = new XMLHttpRequest();
 
         request.open("GET", '/api/v1/file_download?file_name='+name_file);
-        setToken(request);
+        const token = await getToken();
+        request.setRequestHeader('Authorization', 'Bearer ' + token);
         request.responseType = 'arraybuffer';
         request.send();
 
@@ -125,7 +147,7 @@
         }
     };
 
-    sendFile = function (file, bt, originalText, replace) {
+    sendFile = async function (file, bt, originalText, replace) {
         let formData = new FormData();
         let request = new XMLHttpRequest();
 
@@ -139,7 +161,8 @@
         }
 
         request.open(method, '/api/v1/file_upload');
-        setToken(request);
+        const token = await getToken();
+        request.setRequestHeader('Authorization', 'Bearer ' + token);
         request.send(formData);
 
         // check state...
