@@ -26,6 +26,14 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+.idea/
+.DS_Store
+friss_storage.db
+media/
+run_code_checker.sh
+run_integrated_tests.sh
+run_server.sh
+run_unittests.sh
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
