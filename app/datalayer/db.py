@@ -5,11 +5,10 @@
 
 import databases
 import sqlalchemy
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base, DeclarativeMeta
+from sqlalchemy.orm import sessionmaker
 
-from config import get_settings
-
+from ..config import get_settings
 
 engine = sqlalchemy.create_engine(
     get_settings().url_db

@@ -1,6 +1,7 @@
 from fastapi_users import models
 from fastapi_users.db import SQLAlchemyBaseUserTable, SQLAlchemyUserDatabase
-from datalayer.db import database, Base
+
+from app.datalayer import db
 
 
 class User(models.BaseUser):
@@ -19,9 +20,9 @@ class UserUpdate(User, models.BaseUserUpdate):
     pass
 
 
-class UserTable(Base, SQLAlchemyBaseUserTable):
+class UserTable(db.Base, SQLAlchemyBaseUserTable):
     pass
 
 
 users = UserTable.__table__
-user_db = SQLAlchemyUserDatabase(UserDB, database, users)
+user_db = SQLAlchemyUserDatabase(UserDB, db.database, users)

@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: app
+    command: uvicorn app.main:app --workers 1 --host 0.0.0.0 --port 8000
+    volumes:
+      - ./:/src/
+      -  "./data:/data:rw"
+      -  "./media:/media:rw"
+    ports:
+      - 80:8000
+    environment:
+      - DB_FILE_LOCATION=/data/friss_storage.db
+      - MEDIA_LOCATION=/media/
+
+#volumes:
+  #- "/var/data/friss_storage.db"

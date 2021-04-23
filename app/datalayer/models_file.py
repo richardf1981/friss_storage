@@ -1,17 +1,17 @@
 #
-# Models which represents management of
-# file
+# Models which represents management of file
 #
 
 import datetime
 import uuid
 
-from datalayer.db import Base
 from fastapi_users.db.sqlalchemy import GUID
 from sqlalchemy import Column, String, DateTime, Integer, ForeignKey
 
+from app.datalayer import db
 
-class FileManagerDataAccess(Base):
+
+class FileManagerDataAccess(db.Base):
     __tablename__ = "file_manager"
     id = Column(GUID, primary_key=True, default=uuid.uuid4)
     file_name = Column(String, unique=True)
@@ -21,7 +21,7 @@ class FileManagerDataAccess(Base):
     file_size = Column(Integer)
 
 
-class FileManagerHistory(Base):
+class FileManagerHistory(db.Base):
     __tablename__ = "file_history"
     id = Column(GUID, primary_key=True, default=uuid.uuid4)
     id_file = Column(GUID, ForeignKey('file_manager.id'))

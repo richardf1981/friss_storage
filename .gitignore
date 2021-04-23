@@ -29,7 +29,7 @@ MANIFEST
 .idea/
 .DS_Store
 friss_storage.db
-media/
+app/media/
 run_code_checker.sh
 run_integrated_tests.sh
 run_server.sh

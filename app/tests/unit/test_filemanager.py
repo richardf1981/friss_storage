@@ -1,15 +1,11 @@
-from unittest import TestCase, mock
-from unittest.mock import MagicMock, Mock, patch, NonCallableMock
+from unittest import TestCase
+from unittest.mock import MagicMock, Mock
 
-from sqlalchemy.orm import sessionmaker
-
-from datalayer.models_file import FileManagerDataAccess
-from services.exception_filemanager import FileAlreadyExistsError, FilePhysicalDbNotFoundError
-from services.filemanager import FileManager
+from app.services.exception_filemanager import FileAlreadyExistsError, FilePhysicalDbNotFoundError
+from app.services.filemanager import FileManager
 
 
 class TestFileManager(TestCase):
-
     __under_test = None
 
     def setUp(self):

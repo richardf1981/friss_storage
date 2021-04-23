@@ -1,10 +1,9 @@
 import os
-os.environ["TEST"] = "True"
-
-from main import app
 from unittest import TestCase
+
 from fastapi.testclient import TestClient
-import os
+
+from app.main import app
 
 client = TestClient(app)
 path_dummy_file = 'tests/integrated/media/dummy.pdf'

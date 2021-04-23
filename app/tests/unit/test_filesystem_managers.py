@@ -2,7 +2,7 @@ import os
 from unittest import TestCase
 from unittest.mock import patch, Mock, MagicMock
 
-from services.filesystem_managers import FileSystemManager
+from app.services.filesystem_managers import FileSystemManager
 
 
 class TestFileSystemManager(TestCase):
@@ -39,4 +39,4 @@ class TestFileSystemManager(TestCase):
         self.__under_test.exists_file.return_value = True
 
         ret = self.__under_test.download_file("dummy_file", "123")
-        self.assertEqual(self.__under_test.get_path() + "dummy_file",  ret[0])
+        self.assertEqual(self.__under_test.get_path() + "dummy_file", ret[0])

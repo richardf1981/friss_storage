@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Manager</title>
+</head>
+<body>
+<h1>
+File Manager: Friss
+</h1>
+
+<table>
+    <tr>
+        <td>
+            <h3>
+                Upload your file HERE
+            </h3>
+            <form id='file-uploader'>
+              <input id='file-input' type='file'/><br><br>
+              <div id='file-list-display'></div>
+              <br>
+              <button type='submit'>
+                Press Here to Upload
+              </button>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td width="100%">
+            <hr size="4" width="100%" color="black">
+            <h3>
+                Download your file
+            </h3>
+            <form id='file-downloader'>
+                <span><input id='file-input-download' type='text'/></span>
+              <button type='submit'>
+                Press Here to Download your file
+              </button>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <hr size="4" width="100%" color="black">
+            <h3>
+                Replace your file
+            </h3>
+            <form id='file-upload-replace'>
+                <input id='file-input-replace' type='file'/><br><br>
+                <div id='file-list-display-replace'></div>
+              <button type='submit'>
+                Press Here to Upload(Replace) your file
+              </button>
+            </form>
+        </td>
+    </tr>
+</table>
+<script src="static/js/index.js"></script>
+</body>
+</html>

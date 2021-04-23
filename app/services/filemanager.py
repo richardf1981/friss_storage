@@ -1,9 +1,9 @@
 import uuid
+
 from sqlalchemy.exc import IntegrityError
 
-from datalayer.db import SessionLocal
-from datalayer.models_file import FileManagerDataAccess, FileManagerHistory
-from services.exception_filemanager import FileAlreadyExistsError, \
+from ..datalayer.models_file import FileManagerDataAccess, FileManagerHistory
+from ..services.exception_filemanager import FileAlreadyExistsError, \
     FilePhysicalDbNotFoundError
 
 
@@ -26,6 +26,7 @@ class FileManager(object):
             self.__session.commit()
             self.__session.refresh(file_manager_data)
         except IntegrityError:
+            self.__session.rollback()
             raise FileAlreadyExistsError()
 
     def __save_history(self, file_obj, size_bytes, user_id):

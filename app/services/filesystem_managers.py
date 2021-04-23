@@ -1,5 +1,7 @@
 import os
-from services.filemanager import FileManager
+
+from ..services.filemanager import FileManager
+
 COPY_BUFFER_SIZE = 1024 * 1024
 
 
