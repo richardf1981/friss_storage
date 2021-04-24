@@ -51,7 +51,7 @@ python -m unittest discover -s app/tests/integrated
 ## Run with docker
 
 ### Build & Run server
-
+*NOTE*: It builds service on 80 port
 ```
 docker-compose up -d --build
 ```
@@ -60,7 +60,7 @@ docker-compose up -d --build
 ## API documentation (provided by Swagger UI)
 
 ```
-http://127.0.0.1:8000/docs
+http://127.0.0.1/docs
 ```
 
 
@@ -74,20 +74,20 @@ To see UI version please try this link
 [ X ] Flexibility for changing Saving handling <br>
 [ X ] Rest API <br>
 [ X ] SPA for using API <br> 
-[   ] Server side caching <br>
+[ &nbsp; &nbsp;] Server side caching <br>
 [ X ] Dockerfile <br>
 [ X ] Logging for HTTP incoming requests <br>
 [ X ] Verify setup (local) <br>
 [ X ] Readme file <br>
 [ X ] Unit tests <br>
 [ X ] Integrated tests <br>
-[   ] Concurrency tests using services <br>
-[   ] Change DB Mechanism <br>
+[ &nbsp; &nbsp;] Concurrency tests using services <br>
+[ &nbsp; &nbsp;] Change DB Mechanism <br>
 [ X ] Flake8: Pep8 Analyses + Manual review <br>
-[   ] Refactor UI code JS <br>
-[   ] Style UI <br>
-[   ] Listing files available for download <br>
-[   ] Handle JWT properly in JS client
+[ &nbsp; &nbsp;] Refactor UI code in JS <br>
+[ &nbsp; &nbsp;] Style UI <br>
+[ &nbsp; &nbsp;] Listing files available for download <br>
+[ &nbsp; &nbsp;] Handle JWT properly in JS client
 
 ## Over Delivering
 [ X ] APIs for user management JWT <br>

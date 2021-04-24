@@ -97,10 +97,20 @@
         });
     };
 
+    handleError = function (response){
+        // Oh no! There has been an error with the request!
+        try {
+            let json_resp = JSON.parse(response.responseText);
+            alert("Sorry, we're unable to process your request! Reason: " + json_resp.detail);
+        }catch (e){
+            alert("Sorry, we're unable to process your request!");
+        }
+    }
+
     receiveFile = async function (name_file, bt, originalText){
         let request = new XMLHttpRequest();
 
-        request.open("GET", '/api/v1/file_download?file_name='+name_file);
+        request.open("GET", '/api/v1/file_download/'+name_file);
         const token = await getToken();
         request.setRequestHeader('Authorization', 'Bearer ' + token);
         request.responseType = 'arraybuffer';
@@ -134,10 +144,12 @@
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
+                }else if (request.status === 404){
+                    let resp_temp = {}
+                    resp_temp.responseText = '{"detail": "' + request.statusText + '"}';
+                    handleError(resp_temp);
                 } else {
-                    // Oh no! There has been an error with the request!
-                    let json_resp = JSON.parse(request.responseText);
-                    alert("Sorry, we're unable to process your request! Reason: " + json_resp.detail);
+                    handleError(request);
                 }
                 if (bt && originalText){
                     bt.textContent = originalText.trim();
@@ -173,9 +185,7 @@
                     // The request has been completed successfully
                     alert("Congratulations! Your file has been updated successfully!");
                 } else {
-                    // Oh no! There has been an error with the request!
-                    let json_resp = JSON.parse(request.responseText);
-                    alert("Sorry, we're unable to process your request! Reason: " + json_resp.detail);
+                    handleError(request);
                 }
                 if (bt && originalText){
                     bt.textContent = originalText.trim();

@@ -54,7 +54,7 @@ async def file_upload_replace(file: UploadFile = File(...),
     return {"status": "done"}
 
 
-@router.get("/v1/file_download",
+@router.get("/v1/file_download/{file_name}",
             responses={200: {"description": "File content for download"}})
 async def file_download(file_name: str,
                         user=Depends(fastapi_users.get_current_active_user)):
