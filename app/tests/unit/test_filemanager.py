@@ -1,6 +1,8 @@
 from unittest import TestCase
 from unittest.mock import MagicMock, Mock
 
+from sqlalchemy.exc import IntegrityError
+
 from app.services.exception_filemanager import FileAlreadyExistsError, FilePhysicalDbNotFoundError
 from app.services.filemanager import FileManager
 
@@ -79,8 +81,7 @@ class TestFileManager(TestCase):
 
     def test_invalid_upload_file_exists(self):
         session = Mock()
-        attrs = {'commit.side_effect': FileAlreadyExistsError}
-        session.configure_mock(**attrs)
+        session.commit.side_effect = IntegrityError("xx", "xx", "xx")
 
         under_test = FileManager(session)
         under_test.exists_file = MagicMock()
@@ -92,6 +93,7 @@ class TestFileManager(TestCase):
         session.add.assert_called_once()
         session.commit.assert_called_once()
         session.refresh.assert_not_called()
+        session.rollback.assert_called_once()
 
     def test_invalid_upload_replace_file(self):
         session = MagicMock()
