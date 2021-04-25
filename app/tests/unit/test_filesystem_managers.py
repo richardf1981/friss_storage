@@ -25,14 +25,6 @@ class TestFileSystemManager(TestCase):
             mock_method.assert_called_once()
             self.assertEqual(mock_method.return_value, False)
 
-    # TODO: refactor this method...
-    # def test_upload_method(self):
-    #     with patch("builtins.open", mock_open(read_data="data")) as mock_file:
-    #         with patch.object(shutil, "copyfileobj") as mock_shutil:
-    #             self.__under_test.upload_file("", None)
-    #             mock_shutil.assert_called_once()
-    #             mock_file.assert_called_with("/mypath", "wb")
-
     def test_download_file(self):
         self.__under_test.exists_file = MagicMock()
         self.__under_test.set_path("any")

@@ -1,4 +1,3 @@
-
 class FileAlreadyExistsError(Exception):
     pass
 

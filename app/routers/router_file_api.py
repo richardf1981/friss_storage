@@ -75,5 +75,6 @@ async def file_download(file_name: str,
 
 @router.get("/v1/filelist",
             responses={200: {"description": "A top 10 files from this user"}})
-async def file_download(user=Depends(fastapi_users.get_current_active_user)):
+async def file_list(
+        user=Depends(fastapi_users.get_current_active_user)):
     return file_manager_obj.list_files(user.id)

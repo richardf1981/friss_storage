@@ -96,5 +96,6 @@ class FileManager(object):
 
     def list_files(self, user_id, limit=10):
         return self.__session.query(FileManagerDataAccess). \
-            filter(FileManagerDataAccess.user_id_created == user_id).\
-            order_by(FileManagerDataAccess.created_date.desc()).limit(limit).all()
+            filter(FileManagerDataAccess.user_id_created == user_id). \
+            order_by(FileManagerDataAccess.created_date.desc()). \
+            limit(limit).all()

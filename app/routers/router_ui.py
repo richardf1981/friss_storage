@@ -24,6 +24,7 @@ async def home(request: Request, auth: BasicAuth = Depends(basic_auth)):
 
     if isinstance(response, tuple):
         _resp = {"username": response[0], "password": response[1]}
-        return templates.TemplateResponse("index.html", {"request": request, "data": _resp})
+        return templates.TemplateResponse("index.html",
+                                          {"request": request, "data": _resp})
     else:
         return response

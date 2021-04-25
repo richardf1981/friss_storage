@@ -4,7 +4,8 @@ from unittest.mock import MagicMock, Mock
 from sqlalchemy.exc import IntegrityError
 
 from app.datalayer.models_file import FileManagerDataAccess
-from app.services.exception_filemanager import FileAlreadyExistsError, FilePhysicalDbNotFoundError
+from app.services.exception_filemanager \
+    import FileAlreadyExistsError, FilePhysicalDbNotFoundError
 from app.services.filemanager import FileManager
 
 
@@ -78,7 +79,8 @@ class TestFileManager(TestCase):
         under_test.exists_file.return_value = True
         under_test.upload_file = MagicMock()
 
-        self.assertRaises(FileAlreadyExistsError, under_test.upload, MagicMock(), None, "123")
+        self.assertRaises(FileAlreadyExistsError,
+                          under_test.upload, MagicMock(), None, "123")
 
     def test_invalid_upload_file_exists(self):
         session = Mock()
@@ -89,7 +91,8 @@ class TestFileManager(TestCase):
         under_test.exists_file.return_value = False
         under_test.upload_file = MagicMock()
 
-        self.assertRaises(FileAlreadyExistsError, under_test.upload, MagicMock(), None, "123")
+        self.assertRaises(FileAlreadyExistsError,
+                          under_test.upload, MagicMock(), None, "123")
 
         session.add.assert_called_once()
         session.commit.assert_called_once()
@@ -118,14 +121,16 @@ class TestFileManager(TestCase):
 
     def test_not_found_file_db_upload_replace_file(self):
         session = Mock()
-        session.query.return_value.filter.return_value.first.return_value = None
+        session.query.return_value.filter.return_value.\
+            first.return_value = None
 
         under_test = FileManager(session)
         under_test.exists_file = MagicMock()
         under_test.exists_file.return_value = False
         under_test.upload_file = MagicMock()
 
-        self.assertRaises(FilePhysicalDbNotFoundError, under_test.upload, MagicMock(), None, "123", True)
+        self.assertRaises(FilePhysicalDbNotFoundError,
+                          under_test.upload, MagicMock(), None, "123", True)
 
         session.add.assert_not_called()
         session.commit.assert_not_called()
@@ -140,9 +145,9 @@ class TestFileManager(TestCase):
 
         session.query.assert_called_once_with(FileManagerDataAccess)
         session.query.return_value.filter.assert_called_once()
-        session.query.return_value.filter.return_value.order_by.\
+        session.query.return_value.filter.return_value.order_by. \
             assert_called_once()
-        session.query.return_value.filter.return_value.order_by.\
+        session.query.return_value.filter.return_value.order_by. \
             return_value.limit.assert_called_once_with(10)
-        session.query.return_value.filter.return_value.order_by.return_value.\
+        session.query.return_value.filter.return_value.order_by.return_value. \
             limit.return_value.all.assert_called_once()

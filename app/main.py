@@ -51,6 +51,8 @@ app.include_router(router_file_api.router, dependencies=dependency_logging)
 app.include_router(router_ui.router)
 app.mount("/static", StaticFiles(directory="app/templates/static"),
           name="static")
+
+
 # END- ADDING ROUTER FOR UI
 ##############################################################################
 
@@ -80,7 +82,8 @@ async def startup():
         _session = SessionLocal()
         _session.execute("SET FOREIGN_KEY_CHECKS = 0")
         _session.execute("ALTER TABLE friss_storage.file_manager "
-                         "CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
+                         "CONVERT TO CHARACTER SET utf8mb4 "
+                         "COLLATE utf8mb4_unicode_ci")
         _session.execute("SET FOREIGN_KEY_CHECKS = 1")
         _session.close()
         logger.debug("charset changed successfully")
