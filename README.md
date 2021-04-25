@@ -18,7 +18,8 @@ git clone [git@github.com:richardf1981/friss_storage.git|https://github.com/rich
 ### Install dependencies
 *NOTE*: If any error received during install of mysqlclient
 maybe export PATH is necessary, i.e.:  
-export PATH=$PATH:/usr/local/mysql/bin
+export PATH=$PATH:/usr/local/mysql/bin <br>
+Highly recommended use a virtual environment 
 ```
 pip install -r requirements.txt
 ```
@@ -86,14 +87,14 @@ To see UI version please try this link
 [ x ] Readme file <br>
 [ x ] Unit tests <br>
 [ &nbsp; ] Integrated tests <br>
-[ &nbsp; ] Concurrency tests using services <br>
 [ X ] Change DB Mechanism <br>
 [ x ] Flake8: Pep8 Analyses + Manual review <br>
 [ &nbsp; ] Refactor UI code in JS <br>
-[ &nbsp; ] Re-style UI <br>
 [ x ] Listing files available for download <br>
 [ &nbsp; ] Handle JWT properly in JS client
 
 ## Over Delivering
 [ x ] APIs for user management JWT <br>
-[   ] Running version in my own private Cloud
+[ &nbsp; ] Running version in my own private Cloud <br>
+[ &nbsp; ] Concurrency tests using services <br>
+[ &nbsp; ] Re-style UI <br>
