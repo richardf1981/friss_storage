@@ -13,8 +13,10 @@ COPY ./requirements.txt /src/requirements.txt
 
 # install dependencies
 RUN set -eux \
+    && apk update \
     && apk add --no-cache --virtual .build-deps build-base \
     libressl-dev libffi-dev gcc musl-dev python3-dev \
+    musl-dev mariadb-dev \
     && pip install --upgrade pip setuptools wheel \
     && pip install -r /src/requirements.txt \
     && rm -rf /root/.cache/pip

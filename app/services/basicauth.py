@@ -84,7 +84,7 @@ class BasicAuthHelper:
                 max_age=180000,
                 expires=180000,
             )
-            return "DONE"
+            return username, password
         except Exception:
             response = Response(headers={"WWW-Authenticate": "Basic"},
                                 status_code=401)

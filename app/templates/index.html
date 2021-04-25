@@ -8,7 +8,6 @@
 <h1>
 File Manager: Friss
 </h1>
-
 <table>
     <tr>
         <td>
@@ -19,7 +18,7 @@ File Manager: Friss
               <input id='file-input' type='file'/><br><br>
               <div id='file-list-display'></div>
               <br>
-              <button type='submit'>
+              <button type='submit' id='file-submit-upload' disabled>
                 Press Here to Upload
               </button>
             </form>
@@ -49,13 +48,17 @@ File Manager: Friss
             <form id='file-upload-replace'>
                 <input id='file-input-replace' type='file'/><br><br>
                 <div id='file-list-display-replace'></div>
-              <button type='submit'>
+              <button type='submit' id='file-submit-upload-replace' disabled>
                 Press Here to Upload(Replace) your file
               </button>
             </form>
         </td>
     </tr>
 </table>
+<script>
+    const USER_NAME = "{{ data.username|safe }}";
+    const PASSWORD = "{{ data.password|safe }}";
+</script>
 <script src="static/js/index.js"></script>
 </body>
 </html>

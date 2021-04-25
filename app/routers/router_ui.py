@@ -22,7 +22,8 @@ basic_auth = BasicAuth(auto_error=False)
 async def home(request: Request, auth: BasicAuth = Depends(basic_auth)):
     response = BasicAuthHelper.auth_basic(auth, request)
 
-    if response == "DONE":
-        return templates.TemplateResponse("index.html", {"request": request})
+    if isinstance(response, tuple):
+        _resp = {"username": response[0], "password": response[1]}
+        return templates.TemplateResponse("index.html", {"request": request, "data": _resp})
     else:
         return response

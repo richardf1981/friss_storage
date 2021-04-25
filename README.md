@@ -6,6 +6,9 @@ An API based project to upload/download files
 
 ## Preconditions:
 - Python 3
+- Running local (without Docker): MySQL 5.7 CE (up and running)
+*NOTE*: Default config.py is trying to connect at DB 127.0.0.1
+user root without password 
 
 ## Clone the project
 ```
@@ -13,6 +16,9 @@ git clone [git@github.com:richardf1981/friss_storage.git|https://github.com/rich
 ```
 
 ### Install dependencies
+*NOTE*: If any error received during install of mysqlclient
+maybe export PATH is necessary, i.e.:  
+export PATH=$PATH:/usr/local/mysql/bin
 ```
 pip install -r requirements.txt
 ```
@@ -51,7 +57,6 @@ python -m unittest discover -s app/tests/integrated
 ## Run with docker
 
 ### Build & Run server
-*NOTE*: It builds service on 80 port
 ```
 docker-compose up -d --build
 ```
@@ -60,35 +65,35 @@ docker-compose up -d --build
 ## API documentation (provided by Swagger UI)
 
 ```
-http://127.0.0.1/docs
+http://127.0.0.1:8000/docs
 ```
 
 
 ### UI version
 To see UI version please try this link
-[http://localhost/](http://localhost/).
+[http://localhost:8000](http://localhost).
 
 ## Tasks
-[ X ] API authenticated JWT <br>
-[ X ] Storing data in database <br>
-[ X ] Flexibility for changing Saving handling <br>
-[ X ] Rest API <br>
-[ X ] SPA for using API <br> 
+[ x ] API authenticated JWT <br>
+[ x ] Storing data in database <br>
+[ x ] Flexibility for changing Saving handling <br>
+[ x ] Rest API <br>
+[ x ] SPA for using API <br> 
 [ &nbsp; &nbsp;] Server side caching <br>
-[ X ] Dockerfile <br>
-[ X ] Logging for HTTP incoming requests <br>
-[ X ] Verify setup (local) <br>
-[ X ] Readme file <br>
-[ X ] Unit tests <br>
-[ X ] Integrated tests <br>
-[ &nbsp; &nbsp;] Concurrency tests using services <br>
-[ &nbsp; &nbsp;] Change DB Mechanism <br>
-[ X ] Flake8: Pep8 Analyses + Manual review <br>
-[ &nbsp; &nbsp;] Refactor UI code in JS <br>
-[ &nbsp; &nbsp;] Style UI <br>
-[ &nbsp; &nbsp;] Listing files available for download <br>
-[ &nbsp; &nbsp;] Handle JWT properly in JS client
+[ x ] Dockerfile <br>
+[ x ] Logging for HTTP incoming requests <br>
+[ x ] Verify setup (local) <br>
+[ x ] Readme file <br>
+[ x ] Unit tests <br>
+[ &nbsp; ] Integrated tests <br>
+[ &nbsp; ] Concurrency tests using services <br>
+[ X ] Change DB Mechanism <br>
+[ x ] Flake8: Pep8 Analyses + Manual review <br>
+[ &nbsp; ] Refactor UI code in JS <br>
+[ &nbsp; ] Re-style UI <br>
+[ x ] Listing files available for download <br>
+[ &nbsp; ] Handle JWT properly in JS client
 
 ## Over Delivering
-[ X ] APIs for user management JWT <br>
-[   ] Running version in my private Cloud
+[ x ] APIs for user management JWT <br>
+[   ] Running version in my own private Cloud

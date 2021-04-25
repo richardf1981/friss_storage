@@ -16,7 +16,7 @@ class FileManager(object):
 
     def __save_new(self, file_obj, size_bytes, user_id):
         file_manager_data = FileManagerDataAccess(
-            file_name=file_obj.filename,
+            file_name=u'{}'.format(file_obj.filename),
             mime_type=file_obj.content_type,
             file_size=size_bytes,
             user_id_created=user_id)

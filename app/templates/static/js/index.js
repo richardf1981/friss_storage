@@ -8,9 +8,9 @@
     let fileDownload = document.getElementById("file-downloader");
     let fileDownloadInput = document.getElementById("file-input-download");
     let fileListDisplayAll = document.getElementById("file-list-all");
+    let btUploadSubmit = document.getElementById("file-submit-upload");
+    let btUploadSubmitReplace = document.getElementById("file-submit-upload-replace");
     let fileList = [];
-    let USER_NAME = 'demouser@friss.com';
-    let PASSWORD = '4w7ZFMAYF2nFmgUs'
 
     fileDownload.addEventListener('submit', function (evnt) {
         evnt.preventDefault();
@@ -36,15 +36,21 @@
 
     fileInputUploader.addEventListener('change', function (evnt) {
         fileList = [];
+        btUploadSubmit.disabled = true;
+
         for (let i = 0; i < fileInputUploader.files.length; i++) {
             fileList.push(fileInputUploader.files[i]);
+            btUploadSubmit.disabled = false;
         }
         renderFileList(fileListDisplay);
     });
 
     fileInputUploaderReplace.addEventListener("change", function (evnt){
         fileList = [];
+        btUploadSubmitReplace.disabled = true;
+
         for (let i = 0; i < fileInputUploaderReplace.files.length; i++) {
+            btUploadSubmitReplace.disabled = false;
             fileList.push(fileInputUploaderReplace.files[i]);
         }
         renderFileList(fileListDisplayRender);
@@ -59,7 +65,6 @@
         objRender.innerHTML = '';
         fileList.forEach(function (file, index) {
             let fileDisplayEl = document.createElement('p');
-            // fileDisplayEl.innerHTML = (index + 1) + ': ' + file.name;
             fileDisplayEl.innerHTML = file.name;
             objRender.appendChild(fileDisplayEl);
         });
@@ -228,6 +233,7 @@
                 if (request.status === 0 || (request.status >= 200 && request.status < 400)) {
                     // The request has been completed successfully
                     alert("Congratulations! Your file has been updated successfully!");
+                    listFiles();
                 } else {
                     handleError(request);
                 }

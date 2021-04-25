@@ -7,13 +7,29 @@ services:
     command: uvicorn app.main:app --workers 1 --host 0.0.0.0 --port 8000
     volumes:
       - ./:/src/
-      -  "./data:/data:rw"
-      -  "./media:/media:rw"
+      -  "./app/media:/app/media:rw"
     ports:
-      - 80:8000
+      - 8000:8000
     environment:
-      - DB_FILE_LOCATION=/data/friss_storage.db
+      - CONNECTION_STRING=mysql://friss_user:kdk5WllgFct@db/friss_storage
       - MEDIA_LOCATION=/media/
+  db:
+    image: mysql:5.7
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'friss_storage'
+      MYSQL_USER: 'friss_user'
+      MYSQL_PASSWORD: 'kdk5WllgFct'
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+        - my-db:/var/lib/mysql
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
 
-#volumes:
-  #- "/var/data/friss_storage.db"
+# Names our volume
+volumes:
+  my-db:

@@ -14,8 +14,8 @@ from app.datalayer import db
 class FileManagerDataAccess(db.Base):
     __tablename__ = "file_manager"
     id = Column(GUID, primary_key=True, default=uuid.uuid4)
-    file_name = Column(String, unique=True)
-    mime_type = Column(String)
+    file_name = Column(String(200), unique=True)
+    mime_type = Column(String(150))
     user_id_created = Column(GUID, ForeignKey('user.id'))
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
     file_size = Column(Integer)
@@ -28,4 +28,4 @@ class FileManagerHistory(db.Base):
     updated_date = Column(DateTime, default=datetime.datetime.utcnow)
     user_id_updated = Column(GUID, ForeignKey('user.id'))
     file_size = Column(Integer)
-    type_access = Column(String)
+    type_access = Column(String(100))
