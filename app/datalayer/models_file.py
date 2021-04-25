@@ -14,7 +14,7 @@ from app.datalayer import db
 class FileManagerDataAccess(db.Base):
     __tablename__ = "file_manager"
     id = Column(GUID, primary_key=True, default=uuid.uuid4)
-    file_name = Column(String(200), unique=True)
+    file_name = Column(String(200))
     mime_type = Column(String(150))
     user_id_created = Column(GUID, ForeignKey('user.id'))
     created_date = Column(DateTime, default=datetime.datetime.utcnow)

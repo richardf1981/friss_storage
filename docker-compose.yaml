@@ -11,7 +11,7 @@ services:
     ports:
       - 8000:8000
     environment:
-      - CONNECTION_STRING=mysql://friss_user:kdk5WllgFct@db/friss_storage
+      - CONNECTION_STRING=mysql://friss_user:kdk5WllgFct@db/friss_storage?charset=utf8mb4
       - MEDIA_LOCATION=/media/
   db:
     image: mysql:5.7
@@ -23,12 +23,14 @@ services:
       MYSQL_PASSWORD: 'kdk5WllgFct'
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      LANG: C.UTF_8  # this one should be added
     volumes:
         - my-db:/var/lib/mysql
     ports:
       - '3306:3306'
     expose:
       - '3306'
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
 # Names our volume
 volumes:

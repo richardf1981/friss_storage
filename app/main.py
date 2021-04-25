@@ -60,6 +60,7 @@ async def startup():
     await database.connect()
     Base.metadata.create_all(engine)
     # Add dummy user... TODO: should kept?
+    session = None
     try:
         session = SessionLocal()
         user = UserTable(email='demouser@friss.com',
@@ -70,7 +71,21 @@ async def startup():
         session.commit()
         session.refresh(user)
     except Exception as ex:
+        if session:
+            session.rollback()
         logger.warning("Error creating user " + str(ex.__class__))
+
+    # fix table charset...
+    try:
+        _session = SessionLocal()
+        _session.execute("SET FOREIGN_KEY_CHECKS = 0")
+        _session.execute("ALTER TABLE friss_storage.file_manager "
+                         "CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
+        _session.execute("SET FOREIGN_KEY_CHECKS = 1")
+        _session.close()
+        logger.debug("charset changed successfully")
+    except Exception as ex1:
+        logger.warning("Error changing charset " + str(ex1.__class__))
 
 
 @app.on_event("shutdown")
