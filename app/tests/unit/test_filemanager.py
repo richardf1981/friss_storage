@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, Mock
 
 from sqlalchemy.exc import IntegrityError
 
+from app.datalayer.models_file import FileManagerDataAccess
 from app.services.exception_filemanager import FileAlreadyExistsError, FilePhysicalDbNotFoundError
 from app.services.filemanager import FileManager
 
@@ -129,3 +130,19 @@ class TestFileManager(TestCase):
         session.add.assert_not_called()
         session.commit.assert_not_called()
         session.refresh.assert_not_called()
+
+    def test_list_query(self):
+        session = Mock()
+        session.query.return_value = Mock()
+
+        under_test = FileManager(session)
+        under_test.list_files("123")
+
+        session.query.assert_called_once_with(FileManagerDataAccess)
+        session.query.return_value.filter.assert_called_once()
+        session.query.return_value.filter.return_value.order_by.\
+            assert_called_once()
+        session.query.return_value.filter.return_value.order_by.\
+            return_value.limit.assert_called_once_with(10)
+        session.query.return_value.filter.return_value.order_by.return_value.\
+            limit.return_value.all.assert_called_once()

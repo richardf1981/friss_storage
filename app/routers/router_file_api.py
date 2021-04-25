@@ -71,3 +71,9 @@ async def file_download(file_name: str,
 
     return HTTPException(status_code=500,
                          detail="Internal configuration error")
+
+
+@router.get("/v1/filelist",
+            responses={200: {"description": "A top 10 files from this user"}})
+async def file_download(user=Depends(fastapi_users.get_current_active_user)):
+    return file_manager_obj.list_files(user.id)

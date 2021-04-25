@@ -93,3 +93,8 @@ class FileManager(object):
             self.__save_history(file_obj, size_bytes, user_id)
         else:
             self.__save_new(file_obj, size_bytes, user_id)
+
+    def list_files(self, user_id, limit=10):
+        return self.__session.query(FileManagerDataAccess). \
+            filter(FileManagerDataAccess.user_id_created == user_id).\
+            order_by(FileManagerDataAccess.created_date.desc()).limit(limit).all()

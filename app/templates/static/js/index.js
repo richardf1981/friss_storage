@@ -7,8 +7,8 @@
     let fileListDisplayRender =  document.getElementById("file-list-display-replace");
     let fileDownload = document.getElementById("file-downloader");
     let fileDownloadInput = document.getElementById("file-input-download");
+    let fileListDisplayAll = document.getElementById("file-list-all");
     let fileList = [];
-    let token = null;
     let USER_NAME = 'demouser@friss.com';
     let PASSWORD = '4w7ZFMAYF2nFmgUs'
 
@@ -25,18 +25,6 @@
 
         receiveFile(file_name, evnt.submitter, originalText);
     });
-
-    uploadFunction = function (evnt, replace){
-        let originalText = evnt.submitter.textContent;
-
-        evnt.preventDefault();
-        evnt.submitter.disabled = true;
-        evnt.submitter.textContent = "Processing";
-
-        fileList.forEach(function (file) {
-            sendFile(file, evnt.submitter, originalText, replace);
-        });
-    }
 
     fileUploaderReplace.addEventListener('submit', function (evnt) {
         uploadFunction(evnt, true);
@@ -62,7 +50,12 @@
         renderFileList(fileListDisplayRender);
     });
 
-    renderFileList = function (objRender) {
+     window.addEventListener("load", function() {
+        // your code here
+        listFiles();
+    }, false);
+
+    let renderFileList = function (objRender) {
         objRender.innerHTML = '';
         fileList.forEach(function (file, index) {
             let fileDisplayEl = document.createElement('p');
@@ -72,7 +65,33 @@
         });
     };
 
-    getToken = function (request){
+    let renderFileListFiles = function (objRender, list) {
+        objRender.innerHTML = '';
+        list.forEach(function (file, index) {
+            let fileDisplayEl = document.createElement('p');
+            fileDisplayEl.innerHTML = "<a href='#'>" + file.file_name + "</a>";
+            objRender.appendChild(fileDisplayEl);
+
+            fileDisplayEl.addEventListener("click", function(e) {
+                e.preventDefault();
+                fileDownloadInput.value = e.target.innerHTML;
+            });
+        });
+    };
+
+    let uploadFunction = function (evnt, replace){
+        let originalText = evnt.submitter.textContent;
+
+        evnt.preventDefault();
+        evnt.submitter.disabled = true;
+        evnt.submitter.textContent = "Processing";
+
+        fileList.forEach(function (file) {
+            sendFile(file, evnt.submitter, originalText, replace);
+        });
+    };
+
+    let getToken = function (request){
         return new Promise(resolve => {
             setTimeout(() => {
                 let request_token = new XMLHttpRequest();
@@ -97,7 +116,7 @@
         });
     };
 
-    handleError = function (response){
+    let handleError = function (response){
         // Oh no! There has been an error with the request!
         try {
             let json_resp = JSON.parse(response.responseText);
@@ -107,7 +126,32 @@
         }
     }
 
-    receiveFile = async function (name_file, bt, originalText){
+    let listFiles = async function () {
+        let request = new XMLHttpRequest();
+        // let full_url = location.protocol + '//' +
+        //    location.hostname+(location.port ? ':'+location.port: '') + "/api/v1/filelist";
+        let full_url = "/api/v1/filelist";
+
+        request.open("GET", full_url);
+        const token = await getToken();
+        request.setRequestHeader('Authorization', 'Bearer ' + token);
+        request.responseType = "json";
+        request.send();
+
+        // check state...
+        request.onreadystatechange = function () {
+            if (request.readyState === XMLHttpRequest.DONE) {
+                if (request.status === 0 || (request.status >= 200 && request.status < 400)) {
+                    renderFileListFiles(fileListDisplayAll, request.response);
+                } else {
+                    // handleError(request);
+                    console.log("Unable to load list file");
+                }
+            }
+        }
+    };
+
+    let receiveFile = async function (name_file, bt, originalText){
         let request = new XMLHttpRequest();
 
         request.open("GET", '/api/v1/file_download/'+name_file);
@@ -159,7 +203,7 @@
         }
     };
 
-    sendFile = async function (file, bt, originalText, replace) {
+    let sendFile = async function (file, bt, originalText, replace) {
         let formData = new FormData();
         let request = new XMLHttpRequest();
 
